@@ -6,10 +6,8 @@ import { useState, useEffect } from 'react'
 
 const Timer = () => {
     const [timer, setTimer] = useState({
-        hours: 0,
-        mins: 0,
-        sec: 0
-    });
+        hours:0, mins: 0,sec:0
+    }); //how to loop/map then set thru obj keys? 
     const [start, setStart] = useState(false);
     const [paused, setPaused] = useState(false);
     const [finish, setFinish] = useState(false);
@@ -22,12 +20,13 @@ const Timer = () => {
 
     const handleStart = (event) => {
         event.preventDefault();
+        console.log(timer)
         setPaused(false);
         setFinish(false);
         setStart(true);
     }
     const handlePause = () => {
-        setPaused((paused) => !paused);
+        setPaused((prevState) => !prevState);
     }
     const handleReset = () => {
         setTimer({
@@ -53,24 +52,24 @@ const Timer = () => {
         if (paused || finish) return;
     
         // Times up
-        if (timer.hours === 0 && timer.mins === 0 && timer.sec === 0) {
+        if (timer.hours == 0 && timer.mins == 0 && timer.sec == 0) {
             setFinish(true);
             setStart(false); 
           
-        }else if (timer.hours > 0 && timer.mins === 0 && timer.sec === 0 ) {
+        }else if (timer.hours > 0 && timer.mins == 0 && timer.sec == 0 ) {
             setTimer({// decrement hour
                 hours: timer.hours - 1,
                 mins: 59,
                 sec: 59
             });
-        }else if (timer.mins > 0 && timer.sec === 0) {
+        }else if (timer.mins > 0 && timer.sec == 0) {
           setTimer({ // decrement minute
             hours: timer.hours,
             mins: timer.mins - 1,
             sec: 59
           });
         }else {
-          if(timer.sec !== 0){
+          if(timer.sec != 0){
             setTimer({// decrement sec
                 hours: timer.hours,
                 mins: timer.mins,
@@ -109,12 +108,16 @@ const Timer = () => {
       }
 
       const inputStyle = {
-         width:80,
+         width:100,
          input: {
+             ml: 1,
              textAlign: "center",
              fontWeight: "bold",
-             fontSize:"large",
-         }
+             fontSize:30,
+            //  '&:disabled': {
+            //     background: ""
+            //   }
+         }, 
       };
 
   return (
@@ -124,61 +127,59 @@ const Timer = () => {
         sx={boxStyle}
     >
         <Stack direction="row" spacing={1} sx={inputsStack}>
-            <TextField
+            <TextField required 
                 id="hours"
                 type="number"
-                variant="filled"
+                variant="outlined"
                 onChange={handleChange} 
                 value={timer.hours}
                 InputProps={{ inputProps: { min: 0 } }}
                 disabled={start}
                 sx={inputStyle}
             />
-            <label for='hours'>hours</label>
-            <TextField
+            <label for='hours'>H</label>
+            <TextField required
                 id="mins"
                 type="number"
-                variant="filled"
+                variant="outlined"
                 onChange={handleChange} 
                 value={timer.mins}
                 InputProps={{ inputProps: { min: 0, max: 60 } }}
                 disabled={start}
                 sx={inputStyle}
             />
-            <label for='mins'>mins</label>
-            <TextField
+            <label for='mins'>M</label>
+            <TextField required
                 id="sec"
                 type="number"
-                variant="filled"
+                variant="outlined"
                 onChange={handleChange} 
                 value={timer.sec}
                 InputProps={{ inputProps: { min: 0, max: 60 } }}
                 disabled={start}
                 sx={inputStyle}
             />
-            <label for='sec'>sec</label>    
+            <label for='sec'>S</label>    
         </Stack>
 
         <Stack direction="row" spacing={1} sx={btnsStack}>
             <Button
                 type="submit"
-                variant="contained"
-           
+                variant="outlined"
                 value="Start"
                 disabled={start}
-               
             > Start </Button>
 
             <Button
                 onClick={handlePause}
-                variant="contained"
+                variant="outlined"
                 disabled={!start}
             > {paused ? 'Resume' : 'Pause'} </Button>
 
             <Button
                 size="small"
                 onClick={handleReset}
-                variant="contained"
+                variant="outlined"
                 disabled={!start}
             > Restart </Button>
             
