@@ -1,4 +1,8 @@
+import { Alert, Box, Button, Container, Grid, Stack, styled, TextField, } from '@mui/material';
+import { color, fontWeight, width } from '@mui/system';
 import { useState, useEffect } from 'react'
+
+
 
 const Timer = () => {
     const [timer, setTimer] = useState({
@@ -76,52 +80,119 @@ const Timer = () => {
         }
       };
 
-   
+      //sx prop
+      const boxStyle = {
+        mx: 50,
+        my: 20,
+        bgcolor:"pink",
+        p: 5,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        borderRadius: 5
+      };
 
+      const inputsStack = {
+        width: '100%',
+        alignItems: "flex-end",
+        justifyContent:"space-between",
+        p: 3,
+        //backgroundColor:"white",
+      }
+
+      const btnsStack = {
+       justifyContent:"end",
+       //backgroundColor:"white",
+       width: '100%',
+       p: 3,
+        
+      }
+
+      const inputStyle = {
+         width:80,
+         input: {
+             textAlign: "center",
+             fontWeight: "bold",
+             fontSize:"large",
+             min: 0
+         }
+      };
 
   return (
-    <main>
-        <form onSubmit={handleStart}>
-            <div className="inputs">
+    <Box 
+        component="form" 
+        onSubmit={handleStart}
+        sx={boxStyle}
+    >
+        <Stack direction="row" spacing={1} sx={inputsStack}>
+            <TextField
+                id="hours"
+                type="number"
+                variant="filled"
+                onChange={handleChange} 
+                value={timer.hours}
+                InputProps={{ inputProps: { min: 0 } }}
+                disabled={start}
+                sx={inputStyle}
+            />
+            <label for='hours'>hours</label>
+            <TextField
+                id="mins"
+                type="number"
+                variant="filled"
+                onChange={handleChange} 
+                value={timer.mins}
+                InputProps={{ inputProps: { min: 0, max: 60 } }}
+                disabled={start}
+                sx={inputStyle}
+            />
+            <label for='mins'>mins</label>
+            <TextField
+                id="sec"
+                type="number"
+                variant="filled"
+                onChange={handleChange} 
+                value={timer.sec}
+                InputProps={{ inputProps: { min: 0, max: 60 } }}
+                disabled={start}
+                sx={inputStyle}
+            />
+            <label for='sec'>sec</label>    
+        </Stack>
 
-                <input type="number" id="hours" 
-                    onChange={handleChange} 
-                    value={timer.hours}
-                    min={0}
-                />
-                <label for='hours'>hours</label>
+        <Stack direction="row" spacing={1} sx={btnsStack}>
+            <Button
+                type="submit"
+                variant="contained"
+           
+                value="Start"
+                disabled={start}
+               
+            > Start </Button>
 
-                <input type="number" id="mins" 
-                    onChange={handleChange} 
-                    value={timer.mins}
-                    min={0}
-                    max={60}
-                />
-                <label for='mins'>mins</label>
+            <Button
+                onClick={handlePause}
+                variant="contained"
+                disabled={!start}
+            > {paused ? 'Resume' : 'Pause'} </Button>
 
-                <input type="number" id="sec" 
-                    onChange={handleChange} 
-                    value={timer.sec}
-                    min={0}
-                    max={60}   
-                />
-                <label for='sec'>sec</label>    
-            </div>
-            <input type="submit" value="Start" disabled={start} />
-        </form>
-        {start && 
-            <>
-                <button onClick={handlePause}>
-                    {paused ? 'Resume' : 'Pause'}
-                </button>
-                
-                <button onClick={handleReset}>Restart</button>
-            </>
-        }
+            <Button
+                size="small"
+                onClick={handleReset}
+                variant="contained"
+                disabled={!start}
+            > Restart </Button>
+            
+        </Stack>
+
         {finish && 
-        <div className='message'>Timer Done</div>}
-    </main>
+            <Alert severity="info">
+                Time is up!
+            </Alert>
+        }
+    </Box>
+    
   )
 }
 
-export default Timer
+export default Timer;
