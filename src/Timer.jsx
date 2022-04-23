@@ -114,7 +114,6 @@ const Timer = () => {
              textAlign: "center",
              fontWeight: "bold",
              fontSize:"large",
-             min: 0
          }
       };
 
