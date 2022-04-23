@@ -1,5 +1,5 @@
-import { Alert, Box, Button, Container, Grid, Stack, styled, TextField, } from '@mui/material';
-import { color, fontWeight, width } from '@mui/system';
+import { Alert, Box, Button,  Stack, TextField, } from '@mui/material';
+
 import { useState, useEffect } from 'react'
 
 
@@ -44,7 +44,7 @@ const Timer = () => {
     useEffect(() => {
         if(start){
             let timerCountDown = setInterval(() => updateTime(), 1000);
-            return () => clearInterval(timerCountDown);
+            return () => clearInterval(timerCountDown); //cleanup
         }
       
     });
@@ -82,14 +82,14 @@ const Timer = () => {
 
       //sx prop
       const boxStyle = {
-        mx: 50,
         my: 20,
         bgcolor:"pink",
         p: 5,
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'center',
-        borderRadius: 5
+        borderRadius: 5,
+        maxWidth: 500
       };
 
       const inputsStack = {
@@ -186,7 +186,7 @@ const Timer = () => {
         </Stack>
 
         {finish && 
-            <Alert severity="info">
+            <Alert severity="info" sx={{ width: 1 }}>
                 Time is up!
             </Alert>
         }
