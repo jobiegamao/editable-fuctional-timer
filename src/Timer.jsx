@@ -7,20 +7,17 @@ import { useState, useEffect } from 'react'
 const Timer = () => {
     const [timer, setTimer] = useState({
         hours:0, mins: 0,sec:0
-    }); //how to loop/map then set thru obj keys? 
+    });
     const [start, setStart] = useState(false);
     const [paused, setPaused] = useState(false);
     const [finish, setFinish] = useState(false);
     
-    const handleChange = (event) => {
-        const id = event.target.id;
-        const value = event.target.value;
-        setTimer(values => ({...values, [id]: value}))
+    const handleOnChange = (key, newValue) => {
+        setTimer(values => ({...values, [key]: newValue}))
     }
 
     const handleStart = (event) => {
         event.preventDefault();
-        console.log(timer)
         setPaused(false);
         setFinish(false);
         setStart(true);
@@ -114,11 +111,9 @@ const Timer = () => {
              textAlign: "center",
              fontWeight: "bold",
              fontSize:30,
-            //  '&:disabled': {
-            //     background: ""
-            //   }
          }, 
       };
+      
 
   return (
     <Box 
@@ -128,10 +123,10 @@ const Timer = () => {
     >
         <Stack direction="row" spacing={1} sx={inputsStack}>
             <TextField required 
-                id="hours"
+                id='hours'
                 type="number"
                 variant="outlined"
-                onChange={handleChange} 
+                onChange={(e) => handleOnChange("hours", e.target.value)}
                 value={timer.hours}
                 InputProps={{ inputProps: { min: 0 } }}
                 disabled={start}
@@ -142,7 +137,7 @@ const Timer = () => {
                 id="mins"
                 type="number"
                 variant="outlined"
-                onChange={handleChange} 
+                onChange={(e) => handleOnChange("mins", e.target.value)}
                 value={timer.mins}
                 InputProps={{ inputProps: { min: 0, max: 60 } }}
                 disabled={start}
@@ -153,7 +148,7 @@ const Timer = () => {
                 id="sec"
                 type="number"
                 variant="outlined"
-                onChange={handleChange} 
+                onChange={(e) => handleOnChange("sec", e.target.value)}
                 value={timer.sec}
                 InputProps={{ inputProps: { min: 0, max: 60 } }}
                 disabled={start}
