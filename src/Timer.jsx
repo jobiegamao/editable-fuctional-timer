@@ -1,13 +1,11 @@
 import { Alert, Box, Button,  Stack, TextField, } from '@mui/material';
-
 import { useState, useEffect } from 'react'
 
 
 
 const Timer = () => {
     const [timer, setTimer] = useState({
-        hours:0, mins: 0,sec:0
-    });
+        hours:0, mins: 0,sec:0    });
     const [start, setStart] = useState(false);
     const [paused, setPaused] = useState(false);
     const [finish, setFinish] = useState(false);
@@ -16,8 +14,9 @@ const Timer = () => {
         setTimer(values => ({...values, [key]: newValue}))
     }
 
-    const handleStart = (event) => {
-        event.preventDefault();
+    const handleStart = (e) => {
+        e.preventDefault();
+
         setPaused(false);
         setFinish(false);
         setStart(true);
@@ -26,11 +25,7 @@ const Timer = () => {
         setPaused((prevState) => !prevState);
     }
     const handleReset = () => {
-        setTimer({
-            hours: 0,
-            mins: 0,
-            sec: 0
-        });
+        setTimer({hours:0, mins: 0,sec:0 });;
         setPaused(false);
         setFinish(false);
         setStart(false);
@@ -49,24 +44,24 @@ const Timer = () => {
         if (paused || finish) return;
     
         // Times up
-        if (timer.hours == 0 && timer.mins == 0 && timer.sec == 0) {
+        if (timer.hours === 0 && timer.mins === 0 && timer.sec === 0) {
             setFinish(true);
             setStart(false); 
           
-        }else if (timer.hours > 0 && timer.mins == 0 && timer.sec == 0 ) {
+        }else if (timer.hours > 0 && timer.mins === 0 && timer.sec === 0 ) {
             setTimer({// decrement hour
                 hours: timer.hours - 1,
                 mins: 59,
                 sec: 59
             });
-        }else if (timer.mins > 0 && timer.sec == 0) {
+        }else if (timer.mins > 0 && timer.sec === 0) {
           setTimer({ // decrement minute
             hours: timer.hours,
             mins: timer.mins - 1,
             sec: 59
           });
         }else {
-          if(timer.sec != 0){
+          if(timer.sec !== 0){
             setTimer({// decrement sec
                 hours: timer.hours,
                 mins: timer.mins,
@@ -79,7 +74,7 @@ const Timer = () => {
       //sx prop
       const boxStyle = {
         my: 20,
-        bgcolor:"pink",
+        bgcolor:'#D9D7F1',
         p: 5,
         display: 'flex',
         flexDirection: 'column',
@@ -93,12 +88,10 @@ const Timer = () => {
         alignItems: "flex-end",
         justifyContent:"space-between",
         p: 3,
-        //backgroundColor:"white",
-      }
+       }
 
       const btnsStack = {
        justifyContent:"end",
-       //backgroundColor:"white",
        width: '100%',
        p: 3,
         
@@ -126,35 +119,35 @@ const Timer = () => {
                 id='hours'
                 type="number"
                 variant="outlined"
-                onChange={(e) => handleOnChange("hours", e.target.value)}
+                onChange={(e) => handleOnChange(e.target.id, e.target.value)}
                 value={timer.hours}
                 InputProps={{ inputProps: { min: 0 } }}
                 disabled={start}
                 sx={inputStyle}
             />
-            <label for='hours'>H</label>
+            <label htmlFor='hours'>H</label>
             <TextField required
                 id="mins"
                 type="number"
                 variant="outlined"
-                onChange={(e) => handleOnChange("mins", e.target.value)}
+                onChange={(e) => handleOnChange(e.target.id, e.target.value)}
                 value={timer.mins}
                 InputProps={{ inputProps: { min: 0, max: 60 } }}
                 disabled={start}
                 sx={inputStyle}
             />
-            <label for='mins'>M</label>
+            <label htmlFor='mins'>M</label>
             <TextField required
                 id="sec"
                 type="number"
                 variant="outlined"
-                onChange={(e) => handleOnChange("sec", e.target.value)}
+                onChange={(e) => handleOnChange(e.target.id, e.target.value)}
                 value={timer.sec}
                 InputProps={{ inputProps: { min: 0, max: 60 } }}
                 disabled={start}
                 sx={inputStyle}
             />
-            <label for='sec'>S</label>    
+            <label htmlFor='sec'>S</label>    
         </Stack>
 
         <Stack direction="row" spacing={1} sx={btnsStack}>
